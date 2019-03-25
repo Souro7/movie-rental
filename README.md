@@ -3,9 +3,15 @@ The movie rental company will use the api to store information about movies and 
 
 **Project dependencies**
  - Framework: ExpressJS
-	 - cors, joi 
+	 - cors, joi
  - Database: MongoDB
  - ORM: mongoose
+
+
+To add seed data: Run the following command
+
+`mongoimport --db movie-rental --collection movies --file <path_to_file>/seedData.json --jsonArray`
+
 
 **Data model schemas:**
  - Movie collection
@@ -28,7 +34,7 @@ The movie rental company will use the api to store information about movies and 
 
 **API specification**
 
- - Movies resource: 
+ - Movies resource:
 	 - To manage the entire collection of movies resource
 	 - URI : /api/movies
 		 - GET : to retrieve all movies
@@ -41,7 +47,7 @@ The movie rental company will use the api to store information about movies and 
 		 - PUT : to update details of a movie
 		 - DELETE : to remove a movie
 
-  - Genres resource: 
+  - Genres resource:
 	 - To manage the entire collection of genres resource
 	 - URI : /api/genres
 		 - GET : to retrieve all genres
@@ -54,7 +60,7 @@ The movie rental company will use the api to store information about movies and 
 		 - PUT : to update details of a genre
 		 - DELETE : to remove a genre
 
-- Customers resource: 
+- Customers resource:
 	 - To manage the entire collection of customers resource
 	 - URI : /api/customers
 		 - GET : to retrieve all customers
@@ -67,7 +73,7 @@ The movie rental company will use the api to store information about movies and 
 		 - PUT : to update details of a customer
 		 - DELETE : to remove a customer
 
-- Rentals resource: 
+- Rentals resource:
 	 - To manage the entire collection of rentals resource
 	 - URI : /api/rentals
 		 - GET : to retrieve all rentals
