@@ -1,0 +1,26 @@
+{
+  "name": "movie-rental",
+  "version": "1.0.0",
+  "description": "Movie rental application API",
+  "main": "src/server/server.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "joi": "^14.3.1",
+    "mongoose": "^5.4.20"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/sourobrata.sarkar/movie-rental.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/sourobrata.sarkar/movie-rental/issues"
+  },
+  "homepage": "https://gitlab.com/sourobrata.sarkar/movie-rental#README"
+}
