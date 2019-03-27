@@ -9,7 +9,7 @@ const { Customer } = require("../models/customer");
 const { Rental } = require("../models/rental");
 
 app.get("/", async (req, res) => {
-  //   const newMovie = new Movie({ title: "Badla", genre: "Drama", numberInStock: "10", dailyRentalRate: "50" });
+  //   const newMovie = new Movie({ title: "Badlapur", genre: "Drama", numberInStock: "10", dailyRentalRate: "50" });
   //   let savedMovie = await newMovie.save();
   //   res.status(200).send(savedMovie);
 });
