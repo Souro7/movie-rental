@@ -8,7 +8,8 @@ const movieSchema = new Schema({
     required: true
   },
   genre: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Genre",
     required: true
   },
   numberInStock: {
@@ -20,7 +21,7 @@ const movieSchema = new Schema({
     required: true
   }
 });
-const Movie = mongoose.model("Movie", movieSchema);
+const Movie = mongoose.model("movies", movieSchema);
 
 module.exports = {
   Movie

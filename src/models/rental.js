@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 
 const rentalSchema = new Schema({
   customer: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
     required: true
   },
   movie: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
     required: true
   },
   dateIssued: {
@@ -23,7 +23,7 @@ const rentalSchema = new Schema({
     required: true
   }
 });
-const Rental = mongoose.model("Rental", rentalSchema);
+const Rental = mongoose.model("rentals", rentalSchema);
 
 module.exports = {
   Rental
