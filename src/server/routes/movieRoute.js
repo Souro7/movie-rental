@@ -1,6 +1,7 @@
 const routes = require("express").Router();
-const { Genre } = require("../../models/genre");
-const { Movie } = require("../../models/movie");
+const Joi = require("joi");
+const { Genre, genreJoiSchema } = require("../../models/genre");
+const { Movie, movieJoiSchema } = require("../../models/movie");
 
 routes.get("/", async (req, res) => {
   res.status(200).send("connected!");
@@ -20,20 +21,13 @@ routes.get("/api/movies", async (req, res) => {
 });
 
 //add a movie
-routes.post("/api/movies", (req, res) => {
-  const title = req.body.title;
-  const genre = req.body.genre;
-  const numberInStock = req.body.numberInStock;
-  const dailyRentalRate = req.body.dailyRentalRate;
-  const newMovie = new Movie({
-    title: title,
-    genre: genre,
-    numberInStock: numberInStock,
-    dailyRentalRate: dailyRentalRate
-  });
-  newMovie.save().then(response => {
-    res.status(200).send(response);
-  });
+routes.post("/api/movies", async (req, res) => {
+  let reqObj = { title: req.body.title, genre: req.body.genre, numberInStock: req.body.numberInStock, dailyRentalRate: req.body.dailyRentalRate };
+  let { error, value } = Joi.validate(reqObj, movieJoiSchema);
+  if (error) res.status(400).send("error in request: " + error);
+  const newMovie = new Movie(value);
+  let response = await newMovie.save();
+  res.status(200).send(response);
 });
 
 //retrieve a movie based on id
@@ -47,19 +41,13 @@ routes.get("/api/movies/:movieId", async (req, res) => {
 //update the details of a movie
 routes.put("/api/movies/:movieId", async (req, res) => {
   const movieId = req.params.movieId;
-  const title = req.body.title;
-  const genre = req.body.genre;
-  const numberInStock = req.body.numberInStock;
-  const dailyRentalRate = req.body.dailyRentalRate;
+  let reqObj = { title: req.body.title, genre: req.body.genre, numberInStock: req.body.numberInStock, dailyRentalRate: req.body.dailyRentalRate };
+  let { error, value } = Joi.validate(reqObj, movieJoiSchema);
+  if (error) {
+    res.status(400).send("error in request: " + error);
+  }
 
-  let movie = {
-    title,
-    genre,
-    numberInStock,
-    dailyRentalRate
-  };
-
-  await Movie.findOneAndUpdate({ _id: movieId }, { $set: movie }, { new: true }).then(response => {
+  await Movie.findOneAndUpdate({ _id: movieId }, { $set: value }, { new: true }).then(response => {
     res.status(200).send(response);
   });
 });
