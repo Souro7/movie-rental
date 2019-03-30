@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 
 const Schema = mongoose.Schema;
 
 const customerSchema = new Schema({
   name: {
     type: String,
+    minlength: 1,
+    maxlength: 100,
     required: true
   },
   isPremium: {
