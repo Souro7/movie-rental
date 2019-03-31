@@ -48,12 +48,7 @@ const movieJoiSchema = Joi.object().keys({
     .max(500)
 });
 
-function validateMovieJoi(object) {
-  return Joi.validate(object, movieJoiSchema);
-}
-
 module.exports = {
   Movie,
-  movieJoiSchema,
-  validateMovieJoi
+  movieJoiSchema
 };

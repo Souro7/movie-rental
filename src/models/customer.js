@@ -16,12 +16,28 @@ const customerSchema = new Schema({
     required: true
   },
   phone: {
-    type: Number,
+    type: String,
+    minlength: 10,
+    maxlength: 10,
     required: true
   }
 });
 const Customer = mongoose.model("customers", customerSchema);
 
+const customerJoiSchema = Joi.object().keys({
+  name: Joi.string()
+    .trim()
+    .required()
+    .min(1)
+    .max(20),
+  isPremium: Joi.boolean().required(),
+  phone: Joi.string()
+    .trim()
+    .min(10)
+    .max(10)
+});
+
 module.exports = {
-  Customer
+  Customer,
+  customerJoiSchema
 };

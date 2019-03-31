@@ -24,12 +24,20 @@ const rentalSchema = new Schema({
   },
   rentalFee: {
     type: Number,
-    min: 1,
     required: true
   }
 });
 const Rental = mongoose.model("rentals", rentalSchema);
 
+const rentalJoiSchema = Joi.object().keys({
+  customer: Joi.objectId().required(),
+  movie: Joi.objectId().required(),
+  dateIssued: Joi.date().required(),
+  dateReturned: Joi.date(),
+  rentalFee: Joi.number()
+});
+
 module.exports = {
-  Rental
+  Rental,
+  rentalJoiSchema
 };
