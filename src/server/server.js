@@ -19,8 +19,24 @@ const logger = winston.createLogger({
     // - Write all logs error (and below) to `error.log`.
     //
     new winston.transports.File({ filename: "error.log", level: "error" }),
-    new winston.transports.File({ filename: "combined.log" })
+    new winston.transports.File({ filename: "combined.log", level: "info" })
   ]
+});
+
+process.on("uncaughtException", err => {
+  logger.log({
+    level: "error",
+    message: err
+  });
+  process.exit();
+});
+
+process.on("unhandledRejection", (reason, p) => {
+  logger.log({
+    level: "error",
+    message: `Unhandled Rejection at: ${p}, reason: ${reason}`
+  });
+  process.exit();
 });
 
 app.use(bodyParser.json());
@@ -28,7 +44,12 @@ app.use("/api/movies", movieRoute);
 app.use("/api/genres", genreRoute);
 app.use("/api/customers", customerRoute);
 app.use("/api/rentals", rentalRoute);
+//error handling middleware
 app.use(function(err, req, res, next) {
+  logger.log({
+    level: "error",
+    message: err
+  });
   if (res.headersSent) {
     return next(err);
   }
@@ -36,5 +57,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(3000, function() {
-  console.log("Example app listening on port 3000!");
+  console.log("listening on port 3000!");
 });
+
+module.exports = logger;

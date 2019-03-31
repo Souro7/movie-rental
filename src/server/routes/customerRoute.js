@@ -2,6 +2,7 @@ const routes = require("express").Router();
 const Joi = require("joi");
 
 const { Customer, customerJoiSchema } = require("../../models/customer");
+const logger = require("../server");
 
 //get all customers
 
