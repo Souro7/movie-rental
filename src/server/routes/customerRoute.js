@@ -2,7 +2,7 @@ const routes = require("express").Router();
 const Joi = require("joi");
 
 const { Customer, customerJoiSchema } = require("../../models/customer");
-const logger = require("../server");
+const logger = require("../winstonLogger");
 
 //get all customers
 
@@ -10,6 +10,10 @@ routes.get("/", async (req, res, next) => {
   try {
     let customers = await Customer.find();
     res.status(200).send(customers);
+    logger.log({
+      level: "info",
+      message: "get all customers"
+    });
   } catch (e) {
     next(e);
   }
@@ -25,6 +29,10 @@ routes.post("/", async (req, res, next) => {
     const newCustomer = new Customer(value);
     let response = await newCustomer.save();
     res.status(200).send(response);
+    logger.log({
+      level: "info",
+      message: "add new customer"
+    });
   } catch (e) {
     next(e);
   }
@@ -37,6 +45,10 @@ routes.get("/:customerId", async (req, res, next) => {
     const customerId = req.params.customerId;
     await Customer.findOne({ _id: customerId }).then(response => {
       res.status(200).send(response);
+      logger.log({
+        level: "info",
+        message: "retrieve a customer"
+      });
     });
   } catch (e) {
     next(e);
@@ -53,6 +65,10 @@ routes.put("/:customerId", async (req, res, next) => {
     if (error) res.status(400).send("error in request:" + error);
     await Customer.findOneAndUpdate({ _id: customerId }, { $set: value }, { new: true }).then(response => {
       res.status(200).send(response);
+      logger.log({
+        level: "info",
+        message: "update a customer"
+      });
     });
   } catch (e) {
     next(e);
@@ -66,6 +82,10 @@ routes.delete("/:customerId", async (req, res, next) => {
     const customerId = req.params.customerId;
     await Customer.findOneAndDelete({ _id: customerId }).then(response => {
       res.status(200).send(response);
+      logger.log({
+        level: "info",
+        message: "delete a customer"
+      });
     });
   } catch (e) {
     next(e);

@@ -2,12 +2,17 @@ const routes = require("express").Router();
 const Joi = require("joi");
 
 const { Genre, genreJoiSchema } = require("../../models/genre");
+const logger = require("../winstonLogger");
 
 //get all genres
 routes.get("/", async (req, res, next) => {
   try {
     let genres = await Genre.find();
     res.status(200).send(genres);
+    logger.log({
+      level: "info",
+      message: "get all genres"
+    });
   } catch (e) {
     next(e);
   }
@@ -23,6 +28,10 @@ routes.post("/", async (req, res, next) => {
     const newGenre = new Genre(value);
     let response = await newGenre.save();
     res.status(200).send(response);
+    logger.log({
+      level: "info",
+      message: "add a new genre"
+    });
   } catch (e) {
     next(e);
   }
@@ -34,6 +43,10 @@ routes.get("/:genreId", async (req, res, next) => {
     const genreId = req.params.genreId;
     await Genre.findOne({ _id: genreId }).then(response => {
       res.status(200).send(response);
+      logger.log({
+        level: "info",
+        message: "retrieve a genre"
+      });
     });
   } catch (e) {
     next(e);
@@ -49,6 +62,10 @@ routes.put("/:genreId", async (req, res, next) => {
     if (error) res.status(400).send("error in request: " + error);
     await Genre.findOneAndUpdate({ _id: genreId }, { $set: value }, { new: true }).then(response => {
       res.status(200).send(response);
+      logger.log({
+        level: "info",
+        message: "update a genre"
+      });
     });
   } catch (e) {
     next(e);
@@ -61,6 +78,10 @@ routes.delete("/:genreId", async (req, res, next) => {
     const genreId = req.params.genreId;
     await Genre.findOneAndDelete({ _id: genreId }).then(response => {
       res.status(200).send(response);
+      logger.log({
+        level: "info",
+        message: "delete a genre"
+      });
     });
   } catch (e) {
     next(e);

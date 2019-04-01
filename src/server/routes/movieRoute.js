@@ -3,6 +3,7 @@ const Joi = require("joi");
 
 const { Genre, genreJoiSchema } = require("../../models/genre");
 const { Movie, movieJoiSchema } = require("../../models/movie");
+const logger = require("../winstonLogger");
 
 //get all movies
 routes.get("/", async (req, res, next) => {
@@ -14,6 +15,10 @@ routes.get("/", async (req, res, next) => {
           console.log(err);
         }
         res.status(200).send(movie);
+        logger.log({
+          level: "info",
+          message: "get all movies"
+        });
       });
   } catch (e) {
     next(e);
@@ -30,6 +35,10 @@ routes.post("/", async (req, res, next) => {
     const newMovie = new Movie(value);
     let response = await newMovie.save();
     res.status(200).send(response);
+    logger.log({
+      level: "info",
+      message: "add a new movie"
+    });
   } catch (e) {
     next(e);
   }
@@ -41,6 +50,10 @@ routes.get("/:movieId", async (req, res, next) => {
     const movieId = req.params.movieId;
     await Movie.findOne({ _id: movieId }).then(response => {
       res.status(200).send(response);
+      logger.log({
+        level: "info",
+        message: "retrieve a movie"
+      });
     });
   } catch (e) {
     next(e);
@@ -59,6 +72,10 @@ routes.put("/:movieId", async (req, res, next) => {
 
     await Movie.findOneAndUpdate({ _id: movieId }, { $set: value }, { new: true }).then(response => {
       res.status(200).send(response);
+      logger.log({
+        level: "info",
+        message: "update a movie"
+      });
     });
   } catch (e) {
     next(e);
@@ -71,6 +88,10 @@ routes.delete("/:movieId", async (req, res, next) => {
     const movieId = req.params.movieId;
     await Movie.findOneAndDelete({ _id: movieId }).then(response => {
       res.status(200).send(response);
+      logger.log({
+        level: "info",
+        message: "delete a movie"
+      });
     });
   } catch (e) {
     next(e);

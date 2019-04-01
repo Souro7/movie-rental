@@ -4,6 +4,7 @@ const moment = require("moment");
 
 const { Rental, rentalJoiSchema } = require("../../models/rental");
 const { Movie, movieJoiSchema } = require("../../models/movie");
+const logger = require("../winstonLogger");
 
 //get all rentals
 
@@ -11,6 +12,10 @@ routes.get("/", async (req, res, next) => {
   try {
     let rentals = await Rental.find();
     res.status(200).send(rentals);
+    logger.log({
+      level: "info",
+      message: "get all rentals"
+    });
   } catch (e) {
     next(e);
   }
@@ -22,7 +27,6 @@ routes.post("/", async (req, res, next) => {
   try {
     let { customer, movie, dateIssued, dateReturned } = req.body;
     if (!dateReturned) dateReturned = dateIssued;
-    console.log(dateIssued, dateReturned);
 
     //calculate rentalFee
     let dateDiff = moment(dateReturned).diff(moment(dateIssued), "days");
@@ -34,6 +38,10 @@ routes.post("/", async (req, res, next) => {
     const newRental = new Rental(value);
     let response = await newRental.save();
     res.status(200).send(response);
+    logger.log({
+      level: "info",
+      message: "add a new rental"
+    });
   } catch (e) {
     next(e);
   }
@@ -54,6 +62,10 @@ routes.put("/:rentalId", async (req, res, next) => {
     if (error) res.status(400).send("error in request: " + error);
     await Rental.findOneAndUpdate({ _id: rentalId }, { $set: value }, { new: true }).then(response => {
       res.status(200).send(response);
+      logger.log({
+        level: "info",
+        message: "update a rental"
+      });
     });
   } catch (e) {
     next(e);
