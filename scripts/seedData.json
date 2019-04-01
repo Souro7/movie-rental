@@ -1,0 +1,302 @@
+[
+  {
+    "title": "The Shawshank Redemption",
+    "genre": "Crime",
+    "numberInStock": 6,
+    "dailyRentalRate": 93
+  },
+  {
+    "title": "The Godfather",
+    "genre": "Crime",
+    "numberInStock": 10,
+    "dailyRentalRate": 97
+  },
+  {
+    "title": "The Dark Knight",
+    "genre": "Action",
+    "numberInStock": 6,
+    "dailyRentalRate": 91
+  },
+  {
+    "title": "The Godfather: Part II",
+    "genre": "Crime",
+    "numberInStock": 12,
+    "dailyRentalRate": 77
+  },
+  {
+    "title": "Pulp Fiction",
+    "genre": "Crime",
+    "numberInStock": 10,
+    "dailyRentalRate": 131
+  },
+  {
+    "title": "Schindler's List",
+    "genre": "Biography",
+    "numberInStock": 9,
+    "dailyRentalRate": 82
+  },
+  {
+    "title": "The Lord of the Rings: The Return of the King",
+    "genre": "Adventure",
+    "numberInStock": 10,
+    "dailyRentalRate": 146
+  },
+  {
+    "title": "Il buono, il brutto, il cattivo",
+    "genre": "Western",
+    "numberInStock": 7,
+    "dailyRentalRate": 50
+  },
+  {
+    "title": "12 Angry Men",
+    "genre": "Crime",
+    "numberInStock": 14,
+    "dailyRentalRate": 140
+  },
+  {
+    "title": "Inception",
+    "genre": "Action",
+    "numberInStock": 8,
+    "dailyRentalRate": 125
+  },
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "genre": "Adventure",
+    "numberInStock": 13,
+    "dailyRentalRate": 115
+  },
+  {
+    "title": "Forrest Gump",
+    "genre": "Drama",
+    "numberInStock": 12,
+    "dailyRentalRate": 73
+  },
+  {
+    "title": "Fight Club",
+    "genre": "Drama",
+    "numberInStock": 14,
+    "dailyRentalRate": 59
+  },
+  {
+    "title": "Star Wars: Episode V - The Empire Strikes Back",
+    "genre": "Action",
+    "numberInStock": 7,
+    "dailyRentalRate": 103
+  },
+  {
+    "title": "Goodfellas",
+    "genre": "Biography",
+    "numberInStock": 13,
+    "dailyRentalRate": 68
+  },
+  {
+    "title": "The Matrix",
+    "genre": "Action",
+    "numberInStock": 14,
+    "dailyRentalRate": 116
+  },
+  {
+    "title": "The Lord of the Rings: The Two Towers",
+    "genre": "Adventure",
+    "numberInStock": 9,
+    "dailyRentalRate": 118
+  },
+  {
+    "title": "One Flew Over the Cuckoo's Nest",
+    "genre": "Drama",
+    "numberInStock": 13,
+    "dailyRentalRate": 123
+  },
+  {
+    "title": "Shichinin no samurai",
+    "genre": "Adventure",
+    "numberInStock": 14,
+    "dailyRentalRate": 132
+  },
+  {
+    "title": "Interstellar",
+    "genre": "Adventure",
+    "numberInStock": 14,
+    "dailyRentalRate": 98
+  },
+  {
+    "title": "L%uFFFDon",
+    "genre": "Crime",
+    "numberInStock": 13,
+    "dailyRentalRate": 60
+  },
+  {
+    "title": "The Silence of the Lambs",
+    "genre": "Crime",
+    "numberInStock": 8,
+    "dailyRentalRate": 145
+  },
+  {
+    "title": "Saving Private Ryan",
+    "genre": "Drama",
+    "numberInStock": 7,
+    "dailyRentalRate": 63
+  },
+  {
+    "title": "Se7en",
+    "genre": "Crime",
+    "numberInStock": 8,
+    "dailyRentalRate": 85
+  },
+  {
+    "title": "Star Wars",
+    "genre": "Action",
+    "numberInStock": 13,
+    "dailyRentalRate": 70
+  },
+  {
+    "title": "The Usual Suspects",
+    "genre": "Crime",
+    "numberInStock": 10,
+    "dailyRentalRate": 109
+  },
+  {
+    "title": "Sen to Chihiro no kamikakushi",
+    "genre": "Animation",
+    "numberInStock": 11,
+    "dailyRentalRate": 57
+  },
+  {
+    "title": "Cidade de Deus",
+    "genre": "Crime",
+    "numberInStock": 5,
+    "dailyRentalRate": 61
+  },
+  {
+    "title": "Dangal",
+    "genre": "Action",
+    "numberInStock": 11,
+    "dailyRentalRate": 53
+  },
+  {
+    "title": "La vita %uFFFD bella",
+    "genre": "Comedy",
+    "numberInStock": 12,
+    "dailyRentalRate": 127
+  },
+  {
+    "title": "It's a Wonderful Life",
+    "genre": "Drama",
+    "numberInStock": 14,
+    "dailyRentalRate": 118
+  },
+  {
+    "title": "City Lights",
+    "genre": "Comedy",
+    "numberInStock": 12,
+    "dailyRentalRate": 132
+  },
+  {
+    "title": "Coco",
+    "genre": "Animation",
+    "numberInStock": 9,
+    "dailyRentalRate": 126
+  },
+  {
+    "title": "The Lion King",
+    "genre": "Animation",
+    "numberInStock": 10,
+    "dailyRentalRate": 96
+  },
+  {
+    "title": "The Green Mile",
+    "genre": "Crime",
+    "numberInStock": 11,
+    "dailyRentalRate": 93
+  },
+  {
+    "title": "Gladiator",
+    "genre": "Action",
+    "numberInStock": 6,
+    "dailyRentalRate": 116
+  },
+  {
+    "title": "The Departed",
+    "genre": "Crime",
+    "numberInStock": 9,
+    "dailyRentalRate": 85
+  },
+  {
+    "title": "Back to the Future",
+    "genre": "Adventure",
+    "numberInStock": 12,
+    "dailyRentalRate": 89
+  },
+  {
+    "title": "The Prestige",
+    "genre": "Drama",
+    "numberInStock": 10,
+    "dailyRentalRate": 136
+  },
+  {
+    "title": "Raiders of the Lost Ark",
+    "genre": "Action",
+    "numberInStock": 6,
+    "dailyRentalRate": 148
+  },
+  {
+    "title": "Psycho",
+    "genre": "Horror",
+    "numberInStock": 13,
+    "dailyRentalRate": 94
+  },
+  {
+    "title": "Whiplash",
+    "genre": "Drama",
+    "numberInStock": 11,
+    "dailyRentalRate": 141
+  },
+  {
+    "title": "Alien",
+    "genre": "Horror",
+    "numberInStock": 10,
+    "dailyRentalRate": 114
+  },
+  {
+    "title": "Apocalypse Now",
+    "genre": "Drama",
+    "numberInStock": 5,
+    "dailyRentalRate": 125
+  },
+  {
+    "title": "Memento",
+    "genre": "Mystery",
+    "numberInStock": 10,
+    "dailyRentalRate": 100
+  },
+  {
+    "title": "American History X",
+    "genre": "Crime",
+    "numberInStock": 12,
+    "dailyRentalRate": 132
+  },
+  {
+    "title": "Terminator 2: Judgment Day",
+    "genre": "Action",
+    "numberInStock": 9,
+    "dailyRentalRate": 134
+  },
+  {
+    "title": "The Intouchables",
+    "genre": "Biography",
+    "numberInStock": 13,
+    "dailyRentalRate": 118
+  },
+  {
+    "title": "The Pianist",
+    "genre": "Biography",
+    "numberInStock": 11,
+    "dailyRentalRate": 139
+  },
+  {
+    "title": "Casablanca",
+    "genre": "Drama",
+    "numberInStock": 10,
+    "dailyRentalRate": 127
+  }
+]
