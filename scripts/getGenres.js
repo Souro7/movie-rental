@@ -1,4 +1,6 @@
 let movies = require("./seedData.json");
+require("../src/db/dbConnect");
+const { Genre } = require("../src/models/genre");
 
 let genres = [];
 let genre = [];
@@ -11,7 +13,15 @@ for (let i = 0; i < genres.length; i++) {
   genre.push({ name: genres[i] });
 }
 
-// console.log(genre);
+console.log(genre);
+
+async function addGenres() {
+  await Genre.deleteMany();
+  await Genre.insertMany(genre);
+  console.log("done");
+}
+
+// addGenres();
 
 module.exports = {
   genre
