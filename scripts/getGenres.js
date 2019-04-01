@@ -13,7 +13,7 @@ for (let i = 0; i < genres.length; i++) {
   genre.push({ name: genres[i] });
 }
 
-console.log(genre);
+// console.log(genre);
 
 async function addGenres() {
   await Genre.deleteMany();
@@ -21,7 +21,7 @@ async function addGenres() {
   console.log("done");
 }
 
-// addGenres();
+addGenres();
 
 module.exports = {
   genre
