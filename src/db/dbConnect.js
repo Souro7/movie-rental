@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 
 require("../config/config");
+const logger = require("../server/winstonLogger");
 
 try {
   const dbURL = process.env.DB_URI;
   mongoose.connect(dbURL, { useNewUrlParser: true });
 } catch (e) {
-  console.log(e);
+  logger.log({
+    level: "error",
+    message: e
+  });
   process.exit();
 }
 

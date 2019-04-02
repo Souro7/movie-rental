@@ -15,8 +15,12 @@ async function getEachMovie(movie) {
   });
 }
 
-Promise.all(movies.map(getEachMovie)).then(async movieArr => {
-  await Movie.deleteMany();
-  await Movie.insertMany(movieArr);
-  console.log(movieArr);
-});
+try {
+  Promise.all(movies.map(getEachMovie)).then(async movieArr => {
+    await Movie.deleteMany();
+    await Movie.insertMany(movieArr);
+    console.log(movieArr);
+  });
+} catch (e) {
+  console.log(e);
+}
