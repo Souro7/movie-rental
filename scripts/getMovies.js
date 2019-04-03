@@ -1,6 +1,6 @@
 require("../src/db/dbConnect");
 let movies = require("./seedData.json");
-const { genre } = require("./getGenres");
+// const { genre } = require("./getGenres");
 const { Movie } = require("../src/models/movie");
 const { Genre } = require("../src/models/genre");
 

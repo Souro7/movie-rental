@@ -30,6 +30,7 @@ app.use("/api/movies", movieRoute);
 app.use("/api/genres", genreRoute);
 app.use("/api/customers", customerRoute);
 app.use("/api/rentals", rentalRoute);
+
 //error handling middleware
 app.use(function(err, req, res, next) {
   logger.log({
@@ -39,7 +40,7 @@ app.use(function(err, req, res, next) {
   if (res.headersSent) {
     return next(err);
   }
-  res.status(500).send("Error: " + err);
+  res.status(500).send("Error: " + err.message);
 });
 
 app.listen(3000, function() {

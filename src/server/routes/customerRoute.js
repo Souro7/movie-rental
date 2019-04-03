@@ -43,13 +43,13 @@ routes.post("/", async (req, res, next) => {
 routes.get("/:customerId", async (req, res, next) => {
   try {
     const customerId = req.params.customerId;
-    await Customer.findOne({ _id: customerId }).then(response => {
-      res.status(200).send(response);
-      logger.log({
-        level: "info",
-        message: "retrieve a customer"
-      });
+    const customer = await Customer.findOne({ _id: customerId });
+    if (!customer) throw { message: "Customer doesnt exist" };
+    logger.log({
+      level: "info",
+      message: "retrieve a customer"
     });
+    res.status(200).send(customer);
   } catch (e) {
     next(e);
   }
@@ -63,13 +63,13 @@ routes.put("/:customerId", async (req, res, next) => {
     let { name, isPremium, phone } = req.body;
     let { error, value } = Joi.validate({ name, isPremium, phone }, customerJoiSchema);
     if (error) res.status(400).send("error in request:" + error);
-    await Customer.findOneAndUpdate({ _id: customerId }, { $set: value }, { new: true }).then(response => {
-      res.status(200).send(response);
-      logger.log({
-        level: "info",
-        message: "update a customer"
-      });
+    const updatedCustomer = await Customer.findOneAndUpdate({ _id: customerId }, { $set: value }, { new: true });
+    if (!updatedCustomer) throw { message: "Customer doesnt exist" };
+    logger.log({
+      level: "info",
+      message: "update a customer"
     });
+    res.status(200).send(updatedCustomer);
   } catch (e) {
     next(e);
   }
@@ -80,13 +80,13 @@ routes.put("/:customerId", async (req, res, next) => {
 routes.delete("/:customerId", async (req, res, next) => {
   try {
     const customerId = req.params.customerId;
-    await Customer.findOneAndDelete({ _id: customerId }).then(response => {
-      res.status(200).send(response);
-      logger.log({
-        level: "info",
-        message: "delete a customer"
-      });
+    let deletedCustomer = await Customer.findOneAndDelete({ _id: customerId });
+    if (!deletedCustomer) throw { message: "Customer doesnt exist" };
+    logger.log({
+      level: "info",
+      message: "delete a customer"
     });
+    res.status(200).send(deletedCustomer);
   } catch (e) {
     next(e);
   }
