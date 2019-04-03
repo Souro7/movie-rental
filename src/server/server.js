@@ -40,7 +40,7 @@ app.use(function(err, req, res, next) {
   if (res.headersSent) {
     return next(err);
   }
-  res.status(500).send("Error: " + err.message);
+  res.status(err.code || 500).send("Error: " + err.message);
 });
 
 app.listen(3000, function() {

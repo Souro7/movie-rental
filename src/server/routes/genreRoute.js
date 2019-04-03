@@ -23,7 +23,7 @@ routes.post("/", async (req, res, next) => {
   try {
     let { name } = req.body;
     let { error, value } = Joi.validate({ name }, genreJoiSchema);
-    if (error) res.status(400).send("error in request: " + error);
+    if (error) throw { code: 400, message: error };
 
     const newGenre = new Genre(value);
     let response = await newGenre.save();
@@ -42,7 +42,7 @@ routes.get("/:genreId", async (req, res, next) => {
   try {
     const genreId = req.params.genreId;
     const genre = await Genre.findOne({ _id: genreId });
-    if (!genre) throw { message: "Genre doesnt exist" };
+    if (!genre) throw { code: 404, message: "Genre not found" };
     logger.log({
       level: "info",
       message: "retrieve a genre"
@@ -59,9 +59,9 @@ routes.put("/:genreId", async (req, res, next) => {
     const genreId = req.params.genreId;
     let { name } = req.body;
     let { error, value } = Joi.validate({ name }, genreJoiSchema);
-    if (error) res.status(400).send("error in request: " + error);
+    if (error) throw { code: 404, message: error };
     const updatedGenre = await Genre.findOneAndUpdate({ _id: genreId }, { $set: value }, { new: true });
-    if (!updatedGenre) throw { message: "Genre doesnt exist" };
+    if (!updatedGenre) throw { code: 404, message: "Genre not found" };
     logger.log({
       level: "info",
       message: "update a genre"
@@ -77,7 +77,7 @@ routes.delete("/:genreId", async (req, res, next) => {
   try {
     const genreId = req.params.genreId;
     const deletedGenre = await Genre.findOneAndDelete({ _id: genreId });
-    if (!deletedGenre) throw { message: "Genre doesnt exist" };
+    if (!deletedGenre) throw { code: 404, message: "Genre not found" };
     logger.log({
       level: "info",
       message: "delete a genre"

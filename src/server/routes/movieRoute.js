@@ -51,7 +51,7 @@ routes.get("/:movieId", async (req, res, next) => {
   try {
     const movieId = req.params.movieId;
     const movie = await Movie.findOne({ _id: movieId });
-    if (!movie) throw { message: "Movie not found" };
+    if (!movie) throw { code: 404, message: "Movie not found" };
     logger.log({
       level: "info",
       message: "retrieve a movie"
@@ -72,9 +72,9 @@ routes.put("/:movieId", async (req, res, next) => {
       res.status(400).send("error in request: " + error);
     }
     const genreFound = await Genre.findOne({ _id: value.genre });
-    if (!genreFound) throw { message: "Genre not found" };
+    if (!genreFound) throw { code: 404, message: "Genre not found" };
     const updatedMovie = await Movie.findOneAndUpdate({ _id: movieId }, { $set: value }, { new: true });
-    if (!updatedMovie) throw { message: "Movie not found" };
+    if (!updatedMovie) throw { code: 404, message: "Movie not found" };
     logger.log({
       level: "info",
       message: "update a movie"
@@ -90,7 +90,7 @@ routes.delete("/:movieId", async (req, res, next) => {
   try {
     const movieId = req.params.movieId;
     const deletedMovie = await Movie.findOneAndDelete({ _id: movieId });
-    if (!deletedMovie) throw { message: "Movie not found" };
+    if (!deletedMovie) throw { code: 404, message: "Movie not found" };
     logger.log({
       level: "info",
       message: "delete a movie"

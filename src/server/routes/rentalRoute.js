@@ -31,12 +31,12 @@ routes.post("/", async (req, res, next) => {
     if (!dateReturned) dateReturned = dateIssued;
 
     let { error, value } = Joi.validate({ customer, movie, dateIssued, dateReturned, rentalFee }, rentalJoiSchema);
-    if (error) res.status(400).send("error in request: " + error);
+    if (error) throw { code: 400, message: error };
 
     const customerFound = await Customer.findOne({ _id: value.customer });
-    if (!customerFound) throw { message: "Customer not found" };
+    if (!customerFound) throw { code: 404, message: "Customer not found" };
     const movieFound = await Movie.findOne({ _id: value.movie });
-    if (!movieFound) throw { message: "Movie not found" };
+    if (!movieFound) throw { code: 404, message: "Movie not found" };
 
     //calculate rentalFee
     let movieSelected = await Movie.findOne({ _id: movie });
@@ -61,19 +61,19 @@ routes.put("/:rentalId", async (req, res, next) => {
     let { customer, movie, dateIssued, dateReturned, rentalFee } = req.body;
 
     let { error, value } = Joi.validate({ customer, movie, dateIssued, dateReturned, rentalFee }, rentalJoiSchema);
-    if (error) res.status(400).send("error in request: " + error);
+    if (error) throw { code: 400, message: error };
 
     const customerFound = await Customer.findOne({ _id: value.customer });
-    if (!customerFound) throw { message: "Customer not found" };
+    if (!customerFound) throw { code: 404, message: "Customer not found" };
     const movieFound = await Movie.findOne({ _id: value.movie });
-    if (!movieFound) throw { message: "Movie not found" };
+    if (!movieFound) throw { code: 404, message: "Movie not found" };
 
     //calculate rentalFee
     let movieSelected = await Movie.findOne({ _id: movie });
     value.rentalFee = await getRentalFee(movieSelected, dateIssued, dateReturned);
 
     const updatedRental = await Rental.findOneAndUpdate({ _id: rentalId }, { $set: value }, { new: true });
-    if (!updatedRental) throw { message: "Rental not found" };
+    if (!updatedRental) throw { code: 404, message: "Rental not found" };
     logger.log({
       level: "info",
       message: "update a rental"
