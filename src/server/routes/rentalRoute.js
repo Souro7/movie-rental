@@ -1,11 +1,12 @@
 const routes = require("express").Router();
 const Joi = require("joi");
-const moment = require("moment");
+// const moment = require("moment");
 
 const { Rental, rentalJoiSchema } = require("../../models/rental");
 const { Movie, movieJoiSchema } = require("../../models/movie");
 const { Customer, customerJoiSchema } = require("../../models/customer");
 const logger = require("../winstonLogger");
+const getRentalFee = require("../calculateRental");
 
 //get all rentals
 
@@ -26,10 +27,10 @@ routes.get("/", async (req, res, next) => {
 
 routes.post("/", async (req, res, next) => {
   try {
-    let { customer, movie, dateIssued, dateReturned } = req.body;
+    let { customer, movie, dateIssued, dateReturned, rentalFee } = req.body;
     if (!dateReturned) dateReturned = dateIssued;
 
-    let { error, value } = Joi.validate({ customer, movie, dateIssued, dateReturned }, rentalJoiSchema);
+    let { error, value } = Joi.validate({ customer, movie, dateIssued, dateReturned, rentalFee }, rentalJoiSchema);
     if (error) res.status(400).send("error in request: " + error);
 
     const customerFound = await Customer.findOne({ _id: value.customer });
@@ -38,9 +39,8 @@ routes.post("/", async (req, res, next) => {
     if (!movieFound) throw { message: "Movie not found" };
 
     //calculate rentalFee
-    let dateDiff = moment(dateReturned).diff(moment(dateIssued), "days");
     let movieSelected = await Movie.findOne({ _id: movie });
-    let rentalFee = dateDiff * movieSelected.dailyRentalRate;
+    value.rentalFee = await getRentalFee(movieSelected, dateIssued, dateReturned);
 
     const newRental = new Rental(value);
     let response = await newRental.save();
@@ -58,9 +58,9 @@ routes.post("/", async (req, res, next) => {
 routes.put("/:rentalId", async (req, res, next) => {
   try {
     let rentalId = req.params.rentalId;
-    let { customer, movie, dateIssued, dateReturned } = req.body;
+    let { customer, movie, dateIssued, dateReturned, rentalFee } = req.body;
 
-    let { error, value } = Joi.validate({ customer, movie, dateIssued, dateReturned }, rentalJoiSchema);
+    let { error, value } = Joi.validate({ customer, movie, dateIssued, dateReturned, rentalFee }, rentalJoiSchema);
     if (error) res.status(400).send("error in request: " + error);
 
     const customerFound = await Customer.findOne({ _id: value.customer });
@@ -69,9 +69,8 @@ routes.put("/:rentalId", async (req, res, next) => {
     if (!movieFound) throw { message: "Movie not found" };
 
     //calculate rentalFee
-    let dateDiff = moment(dateReturned).diff(moment(dateIssued), "days");
     let movieSelected = await Movie.findOne({ _id: movie });
-    let rentalFee = dateDiff * movieSelected.dailyRentalRate;
+    value.rentalFee = await getRentalFee(movieSelected, dateIssued, dateReturned);
 
     const updatedRental = await Rental.findOneAndUpdate({ _id: rentalId }, { $set: value }, { new: true });
     if (!updatedRental) throw { message: "Rental not found" };
