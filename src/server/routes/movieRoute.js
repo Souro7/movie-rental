@@ -14,11 +14,11 @@ routes.get("/", async (req, res, next) => {
         if (err) {
           console.log(err);
         }
-        res.status(200).send(movie);
         logger.log({
           level: "info",
           message: "get all movies"
         });
+        res.status(200).send(movie);
       });
   } catch (e) {
     next(e);
@@ -33,12 +33,12 @@ routes.post("/", async (req, res, next) => {
     console.log(error);
     if (error) res.status(400).send("error in request: " + error);
     const newMovie = new Movie(value);
-    let response = await newMovie.save();
-    res.status(200).send(response);
+    const addedMovie = await newMovie.save();
     logger.log({
       level: "info",
       message: "add a new movie"
     });
+    res.status(200).send(addedMovie);
   } catch (e) {
     next(e);
   }
@@ -48,13 +48,13 @@ routes.post("/", async (req, res, next) => {
 routes.get("/:movieId", async (req, res, next) => {
   try {
     const movieId = req.params.movieId;
-    await Movie.findOne({ _id: movieId }).then(response => {
-      res.status(200).send(response);
-      logger.log({
-        level: "info",
-        message: "retrieve a movie"
-      });
+    const movie = await Movie.findOne({ _id: movieId });
+    if (!movie) throw { message: "Movie not found" };
+    logger.log({
+      level: "info",
+      message: "retrieve a movie"
     });
+    res.status(200).send(movie);
   } catch (e) {
     next(e);
   }
@@ -70,13 +70,13 @@ routes.put("/:movieId", async (req, res, next) => {
       res.status(400).send("error in request: " + error);
     }
 
-    await Movie.findOneAndUpdate({ _id: movieId }, { $set: value }, { new: true }).then(response => {
-      res.status(200).send(response);
-      logger.log({
-        level: "info",
-        message: "update a movie"
-      });
+    const updatedMovie = await Movie.findOneAndUpdate({ _id: movieId }, { $set: value }, { new: true });
+    if (!updatedMovie) throw { message: "Movie not found" };
+    logger.log({
+      level: "info",
+      message: "update a movie"
     });
+    res.status(200).send(updatedMovie);
   } catch (e) {
     next(e);
   }
@@ -86,13 +86,13 @@ routes.put("/:movieId", async (req, res, next) => {
 routes.delete("/:movieId", async (req, res, next) => {
   try {
     const movieId = req.params.movieId;
-    await Movie.findOneAndDelete({ _id: movieId }).then(response => {
-      res.status(200).send(response);
-      logger.log({
-        level: "info",
-        message: "delete a movie"
-      });
+    const deletedMovie = await Movie.findOneAndDelete({ _id: movieId });
+    if (!deletedMovie) throw { message: "Movie not found" };
+    logger.log({
+      level: "info",
+      message: "delete a movie"
     });
+    res.status(200).send(deletedMovie);
   } catch (e) {
     next(e);
   }

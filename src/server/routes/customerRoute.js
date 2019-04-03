@@ -44,7 +44,7 @@ routes.get("/:customerId", async (req, res, next) => {
   try {
     const customerId = req.params.customerId;
     const customer = await Customer.findOne({ _id: customerId });
-    if (!customer) throw { message: "Customer doesnt exist" };
+    if (!customer) throw { message: "Customer not found" };
     logger.log({
       level: "info",
       message: "retrieve a customer"
@@ -64,7 +64,7 @@ routes.put("/:customerId", async (req, res, next) => {
     let { error, value } = Joi.validate({ name, isPremium, phone }, customerJoiSchema);
     if (error) res.status(400).send("error in request:" + error);
     const updatedCustomer = await Customer.findOneAndUpdate({ _id: customerId }, { $set: value }, { new: true });
-    if (!updatedCustomer) throw { message: "Customer doesnt exist" };
+    if (!updatedCustomer) throw { message: "Customer not found" };
     logger.log({
       level: "info",
       message: "update a customer"
@@ -80,8 +80,8 @@ routes.put("/:customerId", async (req, res, next) => {
 routes.delete("/:customerId", async (req, res, next) => {
   try {
     const customerId = req.params.customerId;
-    let deletedCustomer = await Customer.findOneAndDelete({ _id: customerId });
-    if (!deletedCustomer) throw { message: "Customer doesnt exist" };
+    const deletedCustomer = await Customer.findOneAndDelete({ _id: customerId });
+    if (!deletedCustomer) throw { message: "Customer not found" };
     logger.log({
       level: "info",
       message: "delete a customer"
