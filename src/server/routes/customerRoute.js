@@ -9,11 +9,11 @@ const logger = require("../winstonLogger");
 routes.get("/", async (req, res, next) => {
   try {
     let customers = await Customer.find();
-    res.status(200).send(customers);
     logger.log({
       level: "info",
       message: "get all customers"
     });
+    res.status(200).send(customers);
   } catch (e) {
     next(e);
   }
@@ -28,11 +28,11 @@ routes.post("/", async (req, res, next) => {
     if (error) res.status(400).send("error in request: " + error);
     const newCustomer = new Customer(value);
     let response = await newCustomer.save();
-    res.status(200).send(response);
     logger.log({
       level: "info",
       message: "add new customer"
     });
+    res.status(200).send(response);
   } catch (e) {
     next(e);
   }

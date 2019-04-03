@@ -8,11 +8,11 @@ const logger = require("../winstonLogger");
 routes.get("/", async (req, res, next) => {
   try {
     let genres = await Genre.find();
-    res.status(200).send(genres);
     logger.log({
       level: "info",
       message: "get all genres"
     });
+    res.status(200).send(genres);
   } catch (e) {
     next(e);
   }
@@ -27,11 +27,11 @@ routes.post("/", async (req, res, next) => {
 
     const newGenre = new Genre(value);
     let response = await newGenre.save();
-    res.status(200).send(response);
     logger.log({
       level: "info",
       message: "add a new genre"
     });
+    res.status(200).send(response);
   } catch (e) {
     next(e);
   }
@@ -41,13 +41,13 @@ routes.post("/", async (req, res, next) => {
 routes.get("/:genreId", async (req, res, next) => {
   try {
     const genreId = req.params.genreId;
-    await Genre.findOne({ _id: genreId }).then(response => {
-      res.status(200).send(response);
-      logger.log({
-        level: "info",
-        message: "retrieve a genre"
-      });
+    const genre = await Genre.findOne({ _id: genreId });
+    if (!genre) throw { message: "Genre doesnt exist" };
+    logger.log({
+      level: "info",
+      message: "retrieve a genre"
     });
+    res.status(200).send(genre);
   } catch (e) {
     next(e);
   }
@@ -60,13 +60,13 @@ routes.put("/:genreId", async (req, res, next) => {
     let { name } = req.body;
     let { error, value } = Joi.validate({ name }, genreJoiSchema);
     if (error) res.status(400).send("error in request: " + error);
-    await Genre.findOneAndUpdate({ _id: genreId }, { $set: value }, { new: true }).then(response => {
-      res.status(200).send(response);
-      logger.log({
-        level: "info",
-        message: "update a genre"
-      });
+    const updatedGenre = await Genre.findOneAndUpdate({ _id: genreId }, { $set: value }, { new: true });
+    if (!updatedGenre) throw { message: "Genre doesnt exist" };
+    logger.log({
+      level: "info",
+      message: "update a genre"
     });
+    res.status(200).send(updatedGenre);
   } catch (e) {
     next(e);
   }
@@ -76,13 +76,13 @@ routes.put("/:genreId", async (req, res, next) => {
 routes.delete("/:genreId", async (req, res, next) => {
   try {
     const genreId = req.params.genreId;
-    await Genre.findOneAndDelete({ _id: genreId }).then(response => {
-      res.status(200).send(response);
-      logger.log({
-        level: "info",
-        message: "delete a genre"
-      });
+    const deletedGenre = await Genre.findOneAndDelete({ _id: genreId });
+    if (!deletedGenre) throw { message: "Genre doesnt exist" };
+    logger.log({
+      level: "info",
+      message: "delete a genre"
     });
+    res.status(200).send(deletedGenre);
   } catch (e) {
     next(e);
   }
