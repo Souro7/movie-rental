@@ -32,6 +32,8 @@ routes.post("/", async (req, res, next) => {
     let { error, value } = Joi.validate({ title, genre, numberInStock, dailyRentalRate }, movieJoiSchema);
     console.log(error);
     if (error) res.status(400).send("error in request: " + error);
+    const genreFound = await Genre.findOne({ _id: value.genre });
+    if (!genreFound) throw { message: "Genre not found" };
     const newMovie = new Movie(value);
     const addedMovie = await newMovie.save();
     logger.log({
@@ -69,7 +71,8 @@ routes.put("/:movieId", async (req, res, next) => {
     if (error) {
       res.status(400).send("error in request: " + error);
     }
-
+    const genreFound = await Genre.findOne({ _id: value.genre });
+    if (!genreFound) throw { message: "Genre not found" };
     const updatedMovie = await Movie.findOneAndUpdate({ _id: movieId }, { $set: value }, { new: true });
     if (!updatedMovie) throw { message: "Movie not found" };
     logger.log({
