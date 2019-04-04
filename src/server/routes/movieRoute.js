@@ -33,7 +33,7 @@ routes.post("/", async (req, res, next) => {
     console.log(error);
     if (error) res.status(400).send("error in request: " + error);
     const genreFound = await Genre.findOne({ _id: value.genre });
-    if (!genreFound) throw { message: "Genre not found" };
+    if (!genreFound) throw { code: 404, message: "Genre not found" };
     const newMovie = new Movie(value);
     const addedMovie = await newMovie.save();
     logger.log({
