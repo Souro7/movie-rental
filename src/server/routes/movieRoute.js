@@ -12,7 +12,7 @@ routes.get("/", async (req, res, next) => {
       .populate({ path: "genre", select: "name -_id", model: Genre })
       .exec(function(err, movie) {
         if (err) {
-          console.log(err);
+          throw { message: err };
         }
         logger.log({
           level: "info",
